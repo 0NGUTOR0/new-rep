@@ -16,7 +16,7 @@ def like_post(likepost: Schemas.Like, db: Session = Depends(get_db),
                                                 models.Likes.user_id == current_user.id)
     post_search = db.query(models.Post).filter(models.Post.id==likepost.post).all()
     if  not post_search:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id:{likepost.post} not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with id:{likepost.post} unavailable")
     found_vote = vote_query.first()
     if (likepost.dir == 1):
         if found_vote:
