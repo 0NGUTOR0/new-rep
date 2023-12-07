@@ -47,7 +47,7 @@ def get_one_post(id: int, db: Session = Depends(get_db),
     #post = db.query(models.Post).filter(models.Post.id == id).first()
     results = db.query(models.Post, func.count(models.Likes.post_id).label("Likes")).join(models.Likes, models.Likes.post_id==models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.id == id).first()
     if results == None:
-        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail=f"post with id:{id} not found")
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail=f"post with id:{id} unavailable")
     return results
 
 
